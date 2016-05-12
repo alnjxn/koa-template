@@ -1,0 +1,31 @@
+{
+  "name": "koa-test-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "koa": "^2.0.0"
+  },
+  "devDependencies": {
+    "babel-preset-es2015-node5": "^1.2.0",
+    "babel-preset-es2015-node6": "^0.2.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-register": "^6.8.0",
+    "koa-logger": "^2.0.0",
+    "mocha": "^2.4.5",
+    "nodemon": "^1.9.2",
+    "should": "^8.3.1",
+    "supertest": "^1.2.0"
+  },
+  "engines": {
+    "node": "6.0.0",
+    "npm": "3.8.6"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon",
+    "test": "make test"
+  },
+  "author": "",
+  "license": "ISC"
+}
