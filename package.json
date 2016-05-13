@@ -22,9 +22,9 @@
     "npm": "3.8.6"
   },
   "scripts": {
-    "start": "nodemon lib/index.js --exec babel-node index.js --presets es2015,stage-0",
+    "start": "nodemon lib/index.js --exec babel-node",
     "test": "make test",
-    "build": "babel lib -d dist --presets es2015,stage-0",
+    "build": "babel lib -d dist",
     "serve": "node dist/index.js"
 
   },
