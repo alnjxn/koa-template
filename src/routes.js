@@ -1,10 +1,22 @@
 import Router from 'koa-router';
 import db from './db';
 
-var Users = db.Model.extend({
-  tableName: 'users'
+// Data Models
+let User = db.Model.extend({
+  tableName: 'users',
+  projects: () => {
+    return this.belongsToMany(Project);
+  }
 });
 
+let Project = db.Model.extend({
+  tableName: 'projects',
+  users: () => {
+    return this.belongsToMany(User);
+  }
+});
+
+// Routing
 let router = Router();
 
 router.get('/', (ctx, next) => {
@@ -13,10 +25,17 @@ router.get('/', (ctx, next) => {
 });
 
 router.get('/users', (ctx, next) => {
-  return Users.fetchAll().then((collection) => {
+  return User.fetchAll().then((collection) => {
     ctx.body = collection.toJSON();
     return next();
   });
+});
+
+router.post('/users', (ctx, next) => {
+  // Test bodyparser
+  // TODO: proper logic
+  ctx.body = ctx.request.body;
+  return next();
 });
 
 export default router;

@@ -1,8 +1,11 @@
+// var bodyParser = require('koa-bodyparser');
+import bodyParser from 'koa-bodyparser';
 import Koa from 'koa';
 import router from './routes';
 
-const app = new Koa();
 const port = process.env.PORT || 3000;
+const app = new Koa();
+app.use(bodyParser());
 
 app.use(router.routes());
 app.use(router.allowedMethods());
