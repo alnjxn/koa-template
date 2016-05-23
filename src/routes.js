@@ -31,6 +31,15 @@ router.get('/users', (ctx, next) => {
   });
 });
 
+router.get('/users/:id', (ctx, next) => {
+  return new User({id: ctx.params.id})
+    .fetch()
+    .then((user) => {
+      ctx.body = user.toJSON();
+      return next();
+    });
+});
+
 router.post('/users', (ctx, next) => {
   // Test bodyparser
   // TODO: proper logic

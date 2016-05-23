@@ -33,3 +33,19 @@ describe('GET /users', () => {
   });
 });
 
+describe('GET /users/:id', () => {
+  it('should return a single user as json', (done) => {
+    server
+      .get('/users/1')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        res.status.should.equal(200);
+        res.body.id.should.equal(1);
+        res.body.should.have.ownProperty('name');
+        done();
+      });
+  });
+});
+
