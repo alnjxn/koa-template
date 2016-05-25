@@ -37,10 +37,10 @@ const dbConfig = {
   production: {
     client: 'postgresql',
     connection: {
-      host:     'process.env.PGHOST',
-      database: 'process.env.PGDATABASE',
-      user:     'process.env.PGUSER',
-      password: 'process.env.PGPASSWORD'
+      host:     process.env.PGHOST,
+      database: process.env.PGDATABASE,
+      user:     process.env.PGUSER,
+      password: process.env.PGPASSWORD
     },
     pool: {
       min: 2,
