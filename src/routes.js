@@ -35,8 +35,14 @@ router.get('/users/:id', (ctx, next) => {
   return new User({id: ctx.params.id})
     .fetch()
     .then((user) => {
-      ctx.body = user.toJSON();
-      return next();
+      if (!user) {
+        ctx.status = 404;
+        ctx.body = {error: 'User not found'};
+        return next();
+      } else {
+        ctx.body = user.toJSON();
+        return next();
+      }
     });
 });
 

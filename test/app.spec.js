@@ -34,7 +34,7 @@ describe('GET /users', () => {
 });
 
 describe('GET /users/:id', () => {
-  it('should return a single user as json', (done) => {
+  it('should return a single user as json if found', (done) => {
     server
       .get('/users/1')
       .expect('Content-Type', /json/)
@@ -44,6 +44,17 @@ describe('GET /users/:id', () => {
         res.status.should.equal(200);
         res.body.id.should.equal(1);
         res.body.should.have.ownProperty('name');
+        done();
+      });
+  });
+
+  it('should return a 404 when user not found', (done) => {
+    server
+      .get('/users/0')
+      .expect(404)
+      .end((err, res) => {
+        if (err) return done(err);
+        res.status.should.equal(404);
         done();
       });
   });
