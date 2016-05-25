@@ -31,7 +31,7 @@
     "test": "make test",
     "build": "babel src -d dist",
     "serve": "node dist/index.js",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build && knex migrate:latest --knexfile dist/knexfile.js"
   },
   "author": "",
   "license": "ISC"
