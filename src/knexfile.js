@@ -17,6 +17,7 @@ const dbConfig = {
       directory: './seeds/dev'
     }
   },
+
   staging: {
     client: 'postgresql',
     connection: {
@@ -32,12 +33,14 @@ const dbConfig = {
       tableName: 'knex_migrations'
     }
   },
+
   production: {
     client: 'postgresql',
     connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
+      host:     'process.env.PGHOST',
+      database: 'process.env.PGDATABASE',
+      user:     'process.env.PGUSER',
+      password: 'process.env.PGPASSWORD'
     },
     pool: {
       min: 2,

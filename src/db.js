@@ -1,6 +1,13 @@
 import dbConfig from './knexfile';
 
-const knex = require('knex')(dbConfig.development);
+var database;
+if (process.env.NODE_ENV == 'production') {
+  database = dbConfig.production;
+} else {
+  database = dbConfig.development;
+}
+
+const knex = require('knex')(database);
 const bookshelf = require('bookshelf')(knex);
 
 export default bookshelf;
