@@ -52,4 +52,5 @@ const dbConfig = {
   }
 };
 
-export default dbConfig;
+// export default dbConfig;
+module.exports = dbConfig;
