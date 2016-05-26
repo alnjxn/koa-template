@@ -16,7 +16,7 @@ let Project = db.Model.extend({
   }
 });
 
-// Routing
+// Routes
 let router = Router();
 
 router.get('/', (ctx, next) => {
@@ -47,10 +47,29 @@ router.get('/users/:id', (ctx, next) => {
 });
 
 router.post('/users', (ctx, next) => {
-  // Test bodyparser
-  // TODO: proper logic
-  ctx.body = ctx.request.body;
-  return next();
+  if (!ctx.request.body.name) {
+    ctx.status = 400;
+    ctx.body = { error: 'invalid request' };
+    return next();
+  }
+  return new User({
+    name: ctx.request.body.name
+  })
+  .save()
+  .then((user) => {
+    if (!user) {
+      ctx.status = 400;
+      ctx.body = { error: 'Invalid request' };
+    } else {
+      ctx.body = user.toJSON();
+    }
+    return next();
+  })
+  .catch((err) => {
+    ctx.status = 500;
+    ctx.body = { error: err };
+    return next();
+  });
 });
 
 export default router;

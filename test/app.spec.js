@@ -11,7 +11,6 @@ describe('API Index', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        res.status.should.equal(200);
         res.body.api.should.equal('v1.0');
         done();
       });
@@ -26,7 +25,6 @@ describe('GET /users', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        res.status.should.equal(200);
         res.body.length.should.be.aboveOrEqual(1);
         done();
       });
@@ -41,7 +39,6 @@ describe('GET /users/:id', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        res.status.should.equal(200);
         res.body.id.should.equal(1);
         res.body.should.have.ownProperty('name');
         done();
@@ -52,9 +49,26 @@ describe('GET /users/:id', () => {
     server
       .get('/users/0')
       .expect(404)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+});
+
+describe('POST /users', () => {
+  it('should create a new user and return the new user record', (done) => {
+    server
+      .post('/users')
+      .set('Content-Type', 'application/json')
+      .send({ name: 'George Washington'})
+      .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        res.status.should.equal(404);
+        var body = JSON.parse(res.text);
+        body.should.have.ownProperty('id');
+        body.should.have.ownProperty('name');
+        body.name.should.equal('George Washington');
         done();
       });
   });
