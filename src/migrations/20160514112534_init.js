@@ -1,5 +1,5 @@
 // Projects and Users
-exports.up = (knex, Promise) => {
+exports.up = (knex) => {
   return knex.schema.createTable('projects', (table) => {
     table.increments('id').primary();
     table.string('name');
@@ -12,7 +12,7 @@ exports.up = (knex, Promise) => {
   });
 };
 
-exports.down = (knex, Promise) => {
+exports.down = (knex) => {
   return knex.schema.dropTable('users_projects')
     .dropTable('users')
     .dropTable('projects');
