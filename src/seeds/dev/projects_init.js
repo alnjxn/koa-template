@@ -7,14 +7,14 @@ exports.seed = function(knex, Promise) {
     knex('projects').del(),
 
     // Projects
-    knex('projects').insert({id: 1, name: 'Caterpillar'}),
-    knex('projects').insert({id: 2, name: 'Spider'}),
-    knex('projects').insert({id: 3, name: 'Giraffe'}),
+    knex('projects').insert({name: 'Caterpillar'}),
+    knex('projects').insert({name: 'Spider'}),
+    knex('projects').insert({name: 'Giraffe'}),
 
     // Users
-    knex('users').insert({id: 1, name: 'Rick James'}),
-    knex('users').insert({id: 2, name: 'Michael Jackson'}),
-    knex('users').insert({id: 3, name: 'Rod Stewart'}),
+    knex('users').insert({name: 'Rick James'}),
+    knex('users').insert({name: 'Michael Jackson'}),
+    knex('users').insert({name: 'Rod Stewart'}),
 
     // Project User Relationships
     knex('users_projects').insert({user_id: 1, project_id: 1}),
