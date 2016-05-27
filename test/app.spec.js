@@ -6,7 +6,7 @@ const server = supertest.agent(app.listen());
 describe('API Index', () => {
   it('should return API version', (done) => {
     server
-      .get('/')
+      .get('/api')
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
@@ -20,7 +20,7 @@ describe('API Index', () => {
 describe('GET /users', () => {
   it('should return an array of users as json', (done) => {
     server
-      .get('/users')
+      .get('/api/users')
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
@@ -31,10 +31,10 @@ describe('GET /users', () => {
   });
 });
 
-describe('GET /users/:id', () => {
+describe('GET /api/users/:id', () => {
   it('should return a single user as json if found', (done) => {
     server
-      .get('/users/1')
+      .get('/api/users/1')
       .expect('Content-Type', /json/)
       .expect(200)
       .end((err, res) => {
@@ -47,7 +47,7 @@ describe('GET /users/:id', () => {
 
   it('should return a 404 when user not found', (done) => {
     server
-      .get('/users/0')
+      .get('/api/users/0')
       .expect(404)
       .end((err) => {
         if (err) return done(err);
@@ -59,7 +59,7 @@ describe('GET /users/:id', () => {
 describe('POST /users', () => {
   it('should create a new user and return the new user record', (done) => {
     server
-      .post('/users')
+      .post('/api/users')
       .set('Content-Type', 'application/json')
       .send({ name: 'George Washington'})
       .expect(200)

@@ -17,7 +17,9 @@ let Project = db.Model.extend({
 });
 
 // Routes
-let router = Router();
+let router = Router({
+  prefix: '/api'
+});
 
 router.get('/', (ctx, next) => {
   ctx.body = { api: 'v1.0' };
