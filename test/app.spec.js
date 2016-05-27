@@ -72,5 +72,17 @@ describe('POST /users', () => {
         done();
       });
   });
+
+  it('should return a 400 if a name is not provided', (done) => {
+    server
+      .post('/api/users')
+      .set('Content-Type', 'application/json')
+      .send({ foo: 'bar'})
+      .expect(400)
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
 });
 

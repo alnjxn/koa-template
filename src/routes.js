@@ -26,6 +26,7 @@ router.get('/', (ctx, next) => {
   return next();
 });
 
+// USERS
 router.get('/users', (ctx, next) => {
   return User.fetchAll().then((collection) => {
     ctx.body = collection.toJSON();
@@ -34,7 +35,7 @@ router.get('/users', (ctx, next) => {
 });
 
 router.get('/users/:id', (ctx, next) => {
-  return new User({id: ctx.params.id})
+  return User.forge({id: ctx.params.id})
     .fetch()
     .then((user) => {
       if (!user) {
@@ -49,22 +50,49 @@ router.get('/users/:id', (ctx, next) => {
 });
 
 router.post('/users', (ctx, next) => {
-  if (!ctx.request.body.name) {
-    ctx.status = 400;
-    ctx.body = { error: 'invalid request' };
-    return next();
-  }
-  return new User({
-    name: ctx.request.body.name
-  })
-  .save()
+  let name = ctx.request.body.name;
+  ctx.assert(name, 400, 'name required');
+  return User.forge({ name: name }).save()
   .then((user) => {
-    if (!user) {
-      ctx.status = 400;
-      ctx.body = { error: 'Invalid request' };
-    } else {
-      ctx.body = user.toJSON();
-    }
+    ctx.body = user;
+    return next();
+  })
+  .catch((err) => {
+    ctx.status = 500;
+    ctx.body = { error: err };
+    return next();
+  });
+});
+
+// PROJECTS
+router.get('/projects', (ctx, next) => {
+  return Project.fetchAll().then((projects) => {
+    ctx.body = projects.toJSON();
+    return next();
+  });
+});
+
+router.get('/projects/:id', (ctx, next) => {
+  return Project.forge({id: ctx.params.id})
+    .fetch()
+    .then((project) => {
+      if (!project) {
+        ctx.status = 404;
+        ctx.body = {error: 'Project not found'};
+        return next();
+      } else {
+        ctx.body = project.toJSON();
+        return next();
+      }
+    });
+});
+
+router.post('/projects', (ctx, next) => {
+  let name = ctx.request.body.name;
+  ctx.assert(name, 400, 'name required');
+  return Project.forge({ name: name }).save()
+  .then((project) => {
+    ctx.body = project;
     return next();
   })
   .catch((err) => {
