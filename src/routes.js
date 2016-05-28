@@ -49,6 +49,18 @@ router.get('/users/:id', (ctx, next) => {
     });
 });
 
+router.get('/users/:id/projects', (ctx, next) => {
+  let qb = Project.forge().query();
+  return qb
+    .join('users_projects', 'projects.id', '=', 'users_projects.project_id')
+    .where({'users_projects.user_id': ctx.params.id})
+    .select('id', 'name')
+    .then((collection) => {
+      ctx.body = collection;
+      return next();
+    });
+});
+
 router.post('/users', (ctx, next) => {
   let name = ctx.request.body.name;
   ctx.assert(name, 400, 'name required');
